@@ -1,13 +1,13 @@
 package com.poc.ot.rest;
 
+import com.poc.ot.entity.CustomerCommand;
+import com.poc.ot.handler.CustomerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -25,53 +25,67 @@ public class Controller {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveCustomer() {
+    public ResponseEntity<?> saveCustomer() throws Throwable {
         try {
             logger.info("Incoming request at {} for request /save", applicationName);
             return ResponseEntity.ok("Customer saved");
-        } catch (Exception e) {
-            logger.error("Error occurred while saving customer: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save customer");
+        } catch (Throwable throwable) {
+            logger.error("Error in /save: {}", throwable.getMessage());
+            throw throwable; // Delegate to GlobalExceptionHandler
+        }
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<?> findCustomerById(@RequestBody CustomerCommand request) {
+        try {
+            logger.info("Incoming request to find customer with ID: {}", request.getId());
+
+            if (request.getId() == 1) {
+                return ResponseEntity.ok("Customer found");
+            } else {
+                throw new CustomerNotFoundException("Customer not found");
+            }
+        } catch (CustomerNotFoundException ex) {
+            logger.warn("Error finding customer: {}", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (Throwable throwable) {
+            logger.error("Unexpected error: {}", throwable.getMessage(), throwable);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred: " + throwable.getMessage());
         }
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteCustomer() {
+    public ResponseEntity<?> deleteCustomer() throws Throwable {
         try {
             logger.info("Incoming request at {} for request /delete", applicationName);
             return ResponseEntity.ok("Customer deleted");
-        } catch (Exception e) {
-            logger.error("Error occurred while deleting customer: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete customer");
+        } catch (Throwable throwable) {
+            logger.error("Error in /delete: {}", throwable.getMessage());
+            throw throwable; // Delegate to GlobalExceptionHandler
         }
     }
 
     @GetMapping("/interaction1")
-    public ResponseEntity<?> path1() {
+    public ResponseEntity<?> path1() throws Throwable {
         try {
             logger.info("Incoming request at {} for request /interaction1", applicationName);
             String response = restTemplate.getForObject("http://localhost:8090/service/interaction2", String.class);
             return ResponseEntity.ok("response from /interaction1 + " + response);
-        } catch (HttpClientErrorException e) {
-            logger.error("Client error occurred while calling interaction2: {}", e.getMessage());
-            return ResponseEntity.status(e.getStatusCode()).body("Failed to call interaction2: " + e.getMessage());
-        } catch (ResourceAccessException ex) {
-            logger.error("Resource access error while calling interaction2: {}", ex.getMessage());
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Interaction2 service is unavailable");
-        } catch (Exception ex) {
-            logger.error("Unexpected error occurred while calling interaction2: {}", ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        } catch (Throwable throwable) {
+            logger.error("Error in /interaction1: {}", throwable.getMessage());
+            throw throwable; // Delegate to GlobalExceptionHandler
         }
     }
 
     @GetMapping("/interaction2")
-    public ResponseEntity<?> path2() {
+    public ResponseEntity<?> path2() throws Throwable {
         try {
             logger.info("Incoming request at {} at /interaction2", applicationName);
             return ResponseEntity.ok("response from /interaction2 ");
-        } catch (Exception ex) {
-            logger.error("Error occurred while handling interaction2: {}", ex.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to handle interaction2");
+        } catch (Throwable throwable) {
+            logger.error("Error in /interaction2: {}", throwable.getMessage());
+            throw throwable; // Delegate to GlobalExceptionHandler
         }
     }
 }

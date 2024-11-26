@@ -11,23 +11,21 @@ import org.springframework.web.client.ResourceAccessException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<?> handleHttpClientError(HttpClientErrorException exception) {
-        logger.error("Client error: {}", exception.getMessage());
-        return ResponseEntity.status(exception.getStatusCode()).body("Client error: " + exception.getMessage());
-    }
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(ResourceAccessException.class)
-    public ResponseEntity<?> handleResourceAccessException(ResourceAccessException exception) {
-        logger.error("Resource access error: {}", exception.getMessage());
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service is unavailable: " + exception.getMessage());
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGenericException(Exception exception) {
-        logger.error("Unexpected error: {}", exception.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + exception.getMessage());
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleThrowable(Throwable throwable) {
+        if (throwable instanceof HttpClientErrorException ex) {
+            logger.warn("Client error: {}", ex.getMessage());
+            return ResponseEntity.status(ex.getStatusCode()).body("Client error: " + ex.getMessage());
+        } else if (throwable instanceof ResourceAccessException ex) {
+            logger.warn("Resource access error: {}", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Service is unavailable: " + ex.getMessage());
+        } else {
+            logger.error("Unexpected error: {}", throwable.getMessage(), throwable);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred: " + throwable.getMessage());
+        }
     }
 }

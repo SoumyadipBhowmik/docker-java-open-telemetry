@@ -1,3 +1,6 @@
 D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\config\OtlpConfiguration.java
-D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\controller\Controller.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\entity\CustomerCommand.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\handler\CustomerNotFoundException.java
 D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\DistributedTracingApplication.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\rest\Controller.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\handler\GlobalExceptionHandler.java

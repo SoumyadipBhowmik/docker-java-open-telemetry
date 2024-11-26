@@ -1,3 +1,6 @@
 com\poc\ot\DistributedTracingApplication.class
-com\poc\ot\controller\Controller.class
+com\poc\ot\entity\CustomerCommand.class
+com\poc\ot\handler\CustomerNotFoundException.class
+com\poc\ot\rest\Controller.class
+com\poc\ot\handler\GlobalExceptionHandler.class
 com\poc\ot\config\OtlpConfiguration.class
