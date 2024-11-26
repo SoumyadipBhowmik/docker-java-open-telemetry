@@ -1,3 +1,3 @@
-com\amrut\prabhu\DistributedTracingApplication.class
-com\amrut\prabhu\Controller.class
-com\amrut\prabhu\OtlpConfiguration.class
+com\poc\ot\DistributedTracingApplication.class
+com\poc\ot\controller\Controller.class
+com\poc\ot\config\OtlpConfiguration.class

@@ -1,3 +1,3 @@
-D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\amrut\prabhu\DistributedTracingApplication.java
-D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\amrut\prabhu\Controller.java
-D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\amrut\prabhu\OtlpConfiguration.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\config\OtlpConfiguration.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\controller\Controller.java
+D:\Projects\Github Stuff\distributed-tracing-with-spring-boot\distributed-tracing-spring-boot-opentelemetry-jaeger\src\main\java\com\poc\ot\DistributedTracingApplication.java

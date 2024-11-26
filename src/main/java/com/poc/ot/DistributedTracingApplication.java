@@ -16,6 +16,7 @@ public class DistributedTracingApplication {
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.
+				additionalInterceptors().
 				build();
 	}
 }
